@@ -12,8 +12,8 @@
  * Based on the bash library by Timothy Kay
  * http://timkay.com/solo/
  *
- * Usage : ./solo [port] [exec*]
- * Cron  : * * * * * ./solo 24601 ./task.php arg1 arg2 arg3
+ * Usage : bin/solo [port] [exec*]
+ * Cron  : * * * * * bin/solo 24601 ./task.php arg1 arg2 arg3
  */
 
 // Setup
@@ -30,7 +30,7 @@ $exec = implode(' ', $params);
 // Check data
 if (!$port || !is_numeric($port)) {
     echo "You must provide a port number" . PHP_EOL;
-    echo "Usage: ./solo [port] [exec*]" . PHP_EOL;
+    echo "Usage: bin/solo [port] [exec*]" . PHP_EOL;
     exit(1);
 }
 
