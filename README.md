@@ -10,7 +10,7 @@ Add the following to your composer.json.
 
     {
         "require": {
-            "bashaus/solo": "dev-master"
+            "bashaus/solo-php": "dev-master"
         },
         "config": {
             "bin-dir" : "bin"

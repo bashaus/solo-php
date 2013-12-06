@@ -1,5 +1,5 @@
 {
-    "name": "bashaus/solo",
+    "name": "bashaus/solo-php",
     "description": "Prevents multiple cron instances from running simultaneously",
     "type": "library",
     "keywords": [
