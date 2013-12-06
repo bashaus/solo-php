@@ -1,0 +1,84 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * solo (PHP Implementation)
+ *
+ * Prevents multiple cron instances from running simultaneously.
+ * 
+ * Copyright 2013 Bashkim Isai
+ * http://www.bashkim.com.au/
+ *
+ * Based on the bash library by Timothy Kay
+ * http://timkay.com/solo/
+ *
+ * Usage : ./solo [port] [exec*]
+ * Cron  : * * * * * ./solo 24601 ./task.php arg1 arg2 arg3
+ */
+
+// Setup
+ini_set('error_reporting', E_ALL ^ E_NOTICE);
+ini_set('display_errors', 1);
+set_time_limit(0);
+
+// Get parameters
+$params = $argv;
+$solo = array_shift($params);
+$port = array_shift($params);
+$exec = implode(' ', $params);
+
+// Check data
+if (!$port || !is_numeric($port)) {
+    echo "You must provide a port number" . PHP_EOL;
+    echo "Usage: ./solo [port] [exec*]" . PHP_EOL;
+    exit(1);
+}
+
+// Set socket constants
+define('SOCKET_ADDRESS' , '127.0.0.1');
+define('SOCKET_PORT'    , $port);
+define('SOCKET_TIMEOUT' , 5);
+
+// If a listener exists, exit
+$fp = @fsockopen(SOCKET_ADDRESS, SOCKET_PORT, $errno , $errstr, SOCKET_TIMEOUT);
+if ($fp)
+{
+    fclose($fp);
+    exit(1);
+}
+
+// Listen on the port
+$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+@socket_bind($socket, SOCKET_ADDRESS, SOCKET_PORT) or die('Could not bind to address');
+socket_listen($socket);
+socket_set_nonblock($socket);
+
+// Run the process
+$pipeSpec = array(
+    0 => array('pipe', 'r'), // stdin
+    1 => array('pipe', 'w'), // stdout
+    2 => array('pipe', 'r')  // stderr
+);
+
+$process = proc_open($exec, $pipeSpec, $pipes);
+
+if (is_resource($process)) {
+    while ($process) {
+        @socket_accept($socket);
+
+        if (feof($pipes[1])) {
+            break;
+        }
+
+        // Passthrough STDOUT and STDERR
+        fwrite(STDOUT, fgets($pipes[1]));
+        fwrite(STDERR, fgets($pipes[2]));
+    }
+
+    $return = proc_close($process);
+}
+
+// Cleanup
+socket_close($socket);
+
+exit($return);

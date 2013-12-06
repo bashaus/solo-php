@@ -1,0 +1,31 @@
+{
+    "name": "bashaus/solo",
+    "description": "Prevents multiple cron instances from running simultaneously",
+    "type": "library",
+    "keywords": [
+        "cron"
+    ],
+    "homepage": "http://www.github.com/bashaus/solo",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bashkim Isai",
+            "homepage": "http://www.bashkim.com.au/",
+            "role": "lead"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/bashaus/solo/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/bashaus/solo/issues"
+    },
+    "require": {
+    },
+    "require-dev": {
+    },
+    "bin": [
+        "src/solo"
+    ]
+}
