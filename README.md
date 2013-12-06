@@ -11,6 +11,9 @@ Add the following to your composer.json.
     {
         "require": {
             "bashaus/solo": "dev-master"
+        },
+        "config": {
+            "bin-dir" : "bin"
         }
     }
 
