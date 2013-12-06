@@ -5,7 +5,7 @@
     "keywords": [
         "cron"
     ],
-    "homepage": "http://www.github.com/bashaus/solo",
+    "homepage": "http://www.github.com/bashaus/solo-php",
     "license": "MIT",
     "authors": [
         {
@@ -15,11 +15,11 @@
         },
         {
             "name": "Contributors",
-            "homepage": "https://github.com/bashaus/solo/contributors"
+            "homepage": "https://github.com/bashaus/solo-php/contributors"
         }
     ],
     "support": {
-        "issues": "https://github.com/bashaus/solo/issues"
+        "issues": "https://github.com/bashaus/solo-php/issues"
     },
     "require": {
     },
