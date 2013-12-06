@@ -39,17 +39,9 @@ define('SOCKET_ADDRESS' , '127.0.0.1');
 define('SOCKET_PORT'    , $port);
 define('SOCKET_TIMEOUT' , 5);
 
-// If a listener exists, exit
-$fp = @fsockopen(SOCKET_ADDRESS, SOCKET_PORT, $errno , $errstr, SOCKET_TIMEOUT);
-if ($fp)
-{
-    fclose($fp);
-    exit(1);
-}
-
-// Listen on the port
+// Listen on the port (will exit with status 1 if already bound on port)
 $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-@socket_bind($socket, SOCKET_ADDRESS, SOCKET_PORT) or die('Could not bind to address');
+@socket_bind($socket, SOCKET_ADDRESS, SOCKET_PORT) or exit(1);
 socket_listen($socket);
 socket_set_nonblock($socket);
 
